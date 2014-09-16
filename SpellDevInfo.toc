@@ -3,5 +3,6 @@
 ## Title: Spell Developper Info
 ## Notes: Add technical information about spell, items and macros in tooltips.
 ## Author: Adirelle
+## OptionalDeps: LibItemBuffs-1.0, LibPlayerSpells-1.0, LibDispellable-1.0, DRData-1.0
 
 SpellDevInfo.lua
