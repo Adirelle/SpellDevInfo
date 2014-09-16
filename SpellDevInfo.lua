@@ -119,7 +119,7 @@ local LibItemBuffs, LIBMinor = LibStub('LibItemBuffs-1.0', true)
 if LibItemBuffs then
 	function AddLibItemBuffsInfo(tooltip, id)
 		tooltip:AddLine("|cffffffff=== LibItemBuffs-1.0-"..LIBMinor.." ===|r")
-		tooltip:AddLine("Buffs", ShowSpellList(LibItemBuffs:GetItemBuffs(id)) or "none")
+		tooltip:AddDoubleLine("Buffs", ShowSpellList(LibItemBuffs:GetItemBuffs(id)) or "none")
 	end
 end
 
@@ -128,12 +128,11 @@ if DRData then
 	function AddDRDataInfo(tooltip, id)
 		tooltip:AddLine("|cffffffff=== DRData-1.0-"..DRMinor.." ===|r")
 		local category = DRData:GetSpellCategory(id)
-		if category == "" then category = nil end
-		tooltip:AddLine("DR category", category or "none")
-		for s, p in pairs(DRData:GetProviders()) do
-			if p == id then
-				local category = DRData:GetSpellCategory(s)
-				tooltip:AddLine("Provides", ShowSpellList(s).." "..category)
+		tooltip:AddDoubleLine("DR category", category or "none")
+		for spell, provider in pairs(DRData:GetProviders()) do
+			if provider == id then
+				local category = DRData:GetSpellCategory(spell)
+				tooltip:AddDoubleLine("Provides", ShowSpellList(spell).." "..category)
 			end
 		end
 	end
