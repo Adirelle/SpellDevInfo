@@ -66,7 +66,7 @@ if LibPlayerSpells then
 	
 	local function _ShowFlags(value, name, flag)
 		if not name then return end
-		if value == flag then
+		if band(value, flag) ~= 0 then
 			return name, _ShowFlags(value, next(c, name))
 		else
 			return _ShowFlags(value, next(c, name))
