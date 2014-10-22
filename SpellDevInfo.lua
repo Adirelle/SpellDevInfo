@@ -161,7 +161,7 @@ end
 
 local function AddSpellInfo(tooltip, id)
 	if not IsModifierKeyDown() then return end
-	local name, _, _, cost, isFunnel, powerType, castTime, minRange, maxRange = GetSpellInfo(id)
+	local name, _, _, castTime, minRange, maxRange = GetSpellInfo(id)
 	if not name then return end
 
 	id = tonumber(id)
@@ -169,14 +169,6 @@ local function AddSpellInfo(tooltip, id)
 	tooltip:AddLine("|cffffffff=== Spell data ===|r")
 	tooltip:AddDoubleLine("Id", id or "?")
 	tooltip:AddDoubleLine("Name", name or "?")
-	local costFmt = powerType and powerCostFmt[powerType]
-	if costFmt and powerType then
-		tooltip:AddDoubleLine("Cost", strformat(costFmt, cost))
-	else
-		tooltip:AddDoubleLine("Cost", cost or "?")
-		tooltip:AddDoubleLine("Power Type", powerType or "?")
-	end
-	tooltip:AddDoubleLine("Funnel ?", BoolStr(isFunnel))
 	tooltip:AddDoubleLine("Cast time", castTime and strformat("%5.3fs", castTime/1000.0) or "?")
 	tooltip:AddDoubleLine("Min range", minRange or "?")
 	tooltip:AddDoubleLine("Max range", maxRange or "?")
