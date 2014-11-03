@@ -384,6 +384,57 @@ local function AddSpellbookInfo(tooltip, slot, bookType)
 	end
 end
 
+local mountSources = {
+	[0] = "Not categorized", "Drop", "Quest", "Vendor", "Profession", "Pet Battle", "Achievement",
+	"World Event", "Promotion", "Trading Card Game", "Blizzard Pet Store"
+}
+
+local mountTypes = {
+    [230] = "Ground mount",
+    [231] = "Turtle",
+    [232] = "Vashj'ir Seahorse",
+    [241] = "Qiraji Battle Tank",
+    [242] = "Swift Spectral Gryphon",
+    [247] = "Red Flying Cloud",
+    [248] = "Flying mount",
+    [254] = "Subdued Seahorse",
+    [269] = "Water Strider"
+}
+
+local function AddMountInfo(tooltip, id)
+	if not IsModifierKeyDown() then return end
+
+	for index = 1, C_MountJournal.GetNumMounts() do
+		local creatureName, spellId, icon, active, isUsable, sourceType, isFavorite, isFactionSpecific, faction, hideOnChar, isCollected = C_MountJournal.GetMountInfo(index)
+		if spellId == id then
+			tooltip:AddLine("|cffffffff=== Mount info ===|r")
+
+			tooltip:AddDoubleLine("Creature", creatureName or "?")
+			tooltip:AddDoubleLine("Spell ID", spellId)
+			tooltip:AddDoubleLine("Active", BoolStr(active))
+			tooltip:AddDoubleLine("Is usable ?", BoolStr(isUsable))
+			tooltip:AddDoubleLine("Source type", mountSources[sourceType] or sourceType or "?")
+			tooltip:AddDoubleLine("Is favorite ?", BoolStr(isFavorite))
+			tooltip:AddDoubleLine("Is faction-specific ?", BoolStr(isFactionSpecific))
+			if isFactionSpecific then
+				tooltip:AddDoubleLine("Faction", faction == 0 and "Horde" or "Alliance")
+			end
+			tooltip:AddDoubleLine("Hide on char ?", BoolStr(hideOnChar))
+			tooltip:AddDoubleLine("Is collected ?", BoolStr(isCollected))
+
+			local creatureDisplayID, descriptionText, sourceText, isSelfMount, mountType = C_MountJournal.GetMountInfoExtra(index)
+
+			tooltip:AddDoubleLine("Creature Display ID", creatureDisplayID or "?")
+			--tooltip:AddDoubleLine("Description", descriptionText or "?") -- Annoyingly long
+			--tooltip:AddDoubleLine("Source", sourceText or "?")
+			tooltip:AddDoubleLine("Is self mount ?", BoolStr(isSelfMount))
+			tooltip:AddDoubleLine("Mount type", mountTypes[mountType] or mountType or "?")
+		end
+	end
+
+	return Chain(AddSpellInfo, tooltip, id)
+end
+
 local proto = getmetatable(GameTooltip).__index
 hooksecurefunc(proto, "SetUnitAura", function(...) return AddAuraInfo(UnitAura, ...) end)
 hooksecurefunc(proto, "SetUnitBuff", function(...) return AddAuraInfo(UnitBuff, ...) end)
@@ -391,3 +442,4 @@ hooksecurefunc(proto, "SetUnitDebuff", function(...) return AddAuraInfo(UnitDebu
 hooksecurefunc(proto, "SetSpellByID", AddSpellInfo)
 hooksecurefunc(proto, "SetSpellBookItem", AddSpellbookInfo)
 hooksecurefunc(proto, "SetAction", AddActionInfo)
+hooksecurefunc(proto, "SetMountBySpellID", AddMountInfo)
