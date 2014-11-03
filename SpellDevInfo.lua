@@ -63,7 +63,7 @@ if LibPlayerSpells then
 	local c = LibPlayerSpells.constants
 	local m = LibPlayerSpells.masks
 	local OTHERS = bor(c.AURA, c.UNIQUE_AURA, c.COOLDOWN, c.SURVIVAL, c.BURST, c.MANA_REGEN, c.POWER_REGEN, c.IMPORTANT, c.INVERT_AURA)
-	
+
 	local function _ShowFlags(value, name, flag)
 		if not name then return end
 		if band(value, flag) ~= 0 then
@@ -72,7 +72,7 @@ if LibPlayerSpells then
 			return _ShowFlags(value, next(c, name))
 		end
 	end
-	
+
 	local function ShowFlags(value, mask)
 		local value = band(value, mask)
 		if value == 0 then
@@ -82,11 +82,11 @@ if LibPlayerSpells then
 	end
 
 	function AddLibPlayerSpellsInfo(tooltip, id)
-	
+
 		tooltip:AddLine("|cffffffff=== LibPlayerSpells-1.0-"..LPSMinor.." ===|r")
-		
+
 		local flags, providers, modifiers, raidbuff, category = LibPlayerSpells:GetSpellInfo(id)
-		
+
 		if not flags then
 			return tooltip:AddLine("No information", 0.5, 0.5, 0.5)
 		end
@@ -268,7 +268,7 @@ equipLoc, _, sellPrice = GetItemInfo(id)
 	local usable, nopower = IsUsableItem(id)
 	tooltip:AddDoubleLine("Usable ?", BoolStr(usable))
 	tooltip:AddDoubleLine("Not enough power ?", BoolStr(nopower))
-	
+
 	AddLibItemBuffsInfo(tooltip, id or name)
 
 	local spell = GetItemSpell(id or name)
