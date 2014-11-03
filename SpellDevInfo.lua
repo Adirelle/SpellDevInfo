@@ -217,7 +217,7 @@ local function AddCompanionInfo(tooltip, ctype, id)
 
 			tooltip:AddLine("|cffffffff=== Companion data ===|r")
 			tooltip:AddDoubleLine("Type", ctype)
-			tooltip:AddDoubleLine("Index", Index)
+			tooltip:AddDoubleLine("Index", index)
 			tooltip:AddDoubleLine("Creature Id", creatureID or "?")
 			tooltip:AddDoubleLine("Creature Name", creatureName or "?")
 			tooltip:AddDoubleLine("Spell Id", creatureSpellID)
